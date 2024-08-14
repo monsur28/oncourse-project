@@ -1,73 +1,99 @@
-import { Chart } from "chart.js";
 import logo from "../../assets/logo2.png";
-import { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
-  const [chartData, setChartData] = useState({});
-  const [chartOptions, setChartOptions] = useState({});
-
-  useEffect(() => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue("--text-color");
-    const textColorSecondary = documentStyle.getPropertyValue(
-      "--text-color-secondary"
-    );
-    const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
-    const data = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "My First dataset",
-          backgroundColor: documentStyle.getPropertyValue("--blue-500"),
-          borderColor: documentStyle.getPropertyValue("--blue-500"),
-          data: [65, 59, 80, 81, 56, 55, 40],
-        },
-        {
-          label: "My Second dataset",
-          backgroundColor: documentStyle.getPropertyValue("--pink-500"),
-          borderColor: documentStyle.getPropertyValue("--pink-500"),
-          data: [28, 48, 40, 19, 86, 27, 90],
-        },
-      ],
-    };
-    const options = {
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            fontColor: textColor,
-          },
-        },
+  const data = {
+    labels: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    datasets: [
+      {
+        label: "Course Activity",
+        data: [12, 19, 3, 5, 2, 3, 20, 15, 8, 12, 14, 9],
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
       },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-            font: {
-              weight: 500,
-            },
-          },
-          grid: {
-            display: false,
-            drawBorder: false,
-          },
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    };
+    ],
+  };
 
-    setChartData(data);
-    setChartOptions(options);
-  }, []);
+  const reminders = [
+    {
+      type: "Assignment -1",
+      course: "Foundations of User Experience",
+      due: "5 June 2024",
+      faculty: "Same Jhon",
+      status: "Done",
+      statusColor: "bg-blue-900",
+      profileImg: "https://via.placeholder.com/150", // Replace with actual image source
+    },
+    {
+      type: "Quiz- 2",
+      course: "Foundations of User Experience",
+      due: "5 Aug 2024",
+      faculty: "Jhon Ab",
+      status: "Coming",
+      statusColor: "bg-orange-600",
+      profileImg: "https://via.placeholder.com/150",
+    },
+    {
+      type: "Last Class",
+      course: "Foundations of User Experience",
+      due: "5 June 2024",
+      faculty: "Kabir Same",
+      status: "Done",
+      statusColor: "bg-blue-900",
+      profileImg: "https://via.placeholder.com/150",
+    },
+    // Add more reminder objects here
+  ];
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Course Activity",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
 
   return (
     <div className="flex max-h-fit bg-gray-100">
@@ -157,7 +183,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 max-w-4xl">
+        <div className="grid grid-cols-2 gap-4 ">
           <div className="space-y-3">
             <div className="card bg-gradient-to-t from-cyan-200 to-blue-500 max-h-fit">
               <div className="p-5">
@@ -221,33 +247,97 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
-            <div>
-              <div className="card bg-base-100 w-96">
-                <div className="card-body">
-                  <h2 className="card-title text-4xl font-bold">04</h2>
-                  <div className="flex justify-between">
-                    <p>Completed Course</p>
-                    <p>20% increase</p>
+          <div>
+            <div className="flex gap-3">
+              <div>
+                <div className="card bg-base-100 w-64">
+                  <div className="card-body">
+                    <h2 className="card-title text-4xl font-bold">04</h2>
+                    <div className="flex justify-between">
+                      <p>Completed Course</p>
+                      <p>20% increase</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="card bg-base-100 w-64">
+                  <div className="card-body">
+                    <h2 className="card-title text-4xl font-bold">12</h2>
+                    <div className="flex justify-between">
+                      <p>Course in Progress</p>
+                      <p>1% Decrease</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div>
-              <div className="card bg-base-100 w-96">
-                <div className="card-body">
-                  <h2 className="card-title text-4xl font-bold">12</h2>
-                  <div className="flex justify-between">
-                    <p>Course in Progress</p>
-                    <p>1% Decrease</p>
-                  </div>
+            <div className="w-full">
+              <Bar data={data} options={options} />
+            </div>
+            <div className="bg-gray-100 w-full flex items-center justify-center">
+              <div className="p-6 max-w-7xl  bg-white rounded-xl shadow-md">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold text-gray-800">Reminders</h2>
+                  <button className="text-sm text-gray-600 border border-gray-300 rounded-lg px-3 py-1">
+                    Monthly
+                  </button>
                 </div>
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="text-gray-600">
+                      <th className="pb-3">Type</th>
+                      <th className="pb-3">Due</th>
+                      <th className="pb-3">Faculty</th>
+                      <th className="pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reminders.map((reminder, index) => (
+                      <tr key={index} className="border-t">
+                        <td className="py-3 flex items-center">
+                          <div className="bg-blue-100 p-2 rounded-md mr-4">
+                            {/* Replace with actual icon or image */}
+                            <img
+                              src="https://via.placeholder.com/40"
+                              alt=""
+                              className="w-6 h-6"
+                            />
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-800">
+                              {reminder.type}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {reminder.course}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3">{reminder.due}</td>
+                        <td className="py-3 flex items-center">
+                          <img
+                            src={reminder.profileImg}
+                            alt={reminder.faculty}
+                            className="w-8 h-8 rounded-full mr-3"
+                          />
+                          <span className="text-blue-600">
+                            {reminder.faculty}
+                          </span>
+                        </td>
+                        <td className="py-3">
+                          <span
+                            className={`px-3 py-1 rounded-full text-white text-sm ${reminder.statusColor}`}
+                          >
+                            {reminder.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-        </div>
-        <div className="card">
-          <Chart type="bar" data={chartData} options={chartOptions} />
         </div>
       </div>
     </div>
